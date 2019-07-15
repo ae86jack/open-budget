@@ -1,0 +1,9 @@
+camelot-py
+opencv-python
+selenium
+pytest
+tqdm
+click
+dash
+dash-daq
+pandas

@@ -1,0 +1,29 @@
+version: "2"
+services:
+  selenium-chrome-debug:
+    image: selenium/standalone-chrome-debug:3.141.59-radium
+    container_name: selenium-chrome-debug
+    ports:
+      - 4444:4444
+      - 5900:5900
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./pdf_files:/home/seluser/Downloads       # local_dir:remote_dir
+
+  jupyter-budget:
+    image: jupyter-budget
+    build:
+      context: ./jupyter
+      dockerfile: Dockerfile
+    container_name: jupyter-budget
+    ports:
+      - "8888:8888"
+    command: start-notebook.sh  --NotebookApp.password="sha1:018e2dbf2260:125c9258049166463de7e1030d8e17a355076e8b"
+    # password is 'passwd'
+    # >>> from notebook.auth import passwd
+    # >>> passwd('passwd')
+    # >>> sha1:018e2dbf2260:125c9258049166463de7e1030d8e17a355076e8b
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - .:/home/jovyan/work
