@@ -2,7 +2,13 @@ from open_budget.parser.pdf_parser import run, BaseParser
 from click.testing import CliRunner
 
 
-def test_parse():
+def test_parse_single_dept():
+    runner = CliRunner()
+    result = runner.invoke(run, ['../pdf_files/jszwfw/江苏省人民检察院'])
+    assert result.exit_code == 0
+
+
+def test_parse_all_dept():
     runner = CliRunner()
     result = runner.invoke(run, ['../pdf_files/jszwfw'])
     assert result.exit_code == 0
