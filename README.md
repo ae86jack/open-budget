@@ -63,7 +63,7 @@ $ pip install -r requirements.txt
 
 ### Using pipenv
 
-建议用[Pipenv](https://github.com/pypa/pipenv)安装，Pipenv是个非常好用的好用的python虚拟环境和包管理工具，集成了pip，virtualenv两者的功能。
+建议用[Pipenv](https://github.com/pypa/pipenv)安装，Pipenv是个非常好用的python虚拟环境和包管理工具，集成了pip，virtualenv两者的功能，很方便实现一个项目一个虚拟环境，跟其他环境独立开来。`pipenv install`会使用当前目录下的Pipfile。
 
 <pre>
 $ pipenv install
