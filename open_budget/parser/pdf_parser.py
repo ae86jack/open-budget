@@ -271,7 +271,3 @@ class BalanceParser(BaseParser):
 
 if __name__ == '__main__':
     run()
-
-
-def test():
-    run('../../pdf_files/jszwfw/江苏省人大办公厅')
