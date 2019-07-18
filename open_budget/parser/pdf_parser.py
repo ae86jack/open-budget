@@ -129,11 +129,12 @@ class BaseParser:
         """
         pass
 
-    def correct(self, df: pd.DataFrame):
+    @classmethod
+    def correct(cls, df: pd.DataFrame):
         max_row, max_col = df.shape
         for index, series in df.iterrows():
             for c, text in series.iteritems():
-                is_merge, divided_cells = self.split_merge_cell(text)
+                is_merge, divided_cells = cls.split_merge_cell(text)
                 if is_merge:
                     if c >= 1 and df.iloc[index, c - 1] == '':
                         df.iloc[index, c - 1], df.iloc[index, c] = divided_cells
@@ -142,12 +143,13 @@ class BaseParser:
                     else:
                         logging.warning(f'单位格分开可能出错. df[{index}][{c}] {text}')
 
-    def split_merge_cell(self, text):
+    @classmethod
+    def split_merge_cell(cls, text):
         """ 由于camelot在解析table的时候, 会把两个格子的内容合到一起, 所以在这里把它分开.
             比如'24,458.43二、财政专户管理资金' 分为'24,458.43'和'二、财政专户管理资金' """
         if not text or not isinstance(text, str):
             return False, None
-        r = self.re_merge.search(text)
+        r = cls.re_merge.search(text)
         if not r:
             return False, None
         start, end = r.span()
@@ -199,14 +201,15 @@ class BaseParser:
         self.parsed_df.to_csv(file_path)
         return file_path
 
-    def strip(self, word):
+    @classmethod
+    def strip(cls, word):
         """ 去掉前面的'1.', '一、', 去掉包括空格、制表符、换页符 [ \f\n\r\t\v] """
         if not word or not isinstance(word, str):
             return word
-        r1 = self.re_digit.search(word)
+        r1 = cls.re_digit.search(word)
         if r1:
             word = word[r1.span()[1]:]
-        r2 = self.re_zh_digit.search(word)
+        r2 = cls.re_zh_digit.search(word)
         if r2:
             word = word[r2.span()[1]:]
         return re.sub(r'\s+', '', word)
